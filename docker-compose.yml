@@ -8,13 +8,13 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
-    ports:
-      - "5432:5432"
+    # УДАЛЯЕМ ports! Теперь база доступна только бэкенду внутри сети Docker.
+    # Никто из интернета не сможет подключиться к твоей базе.
 
   backend:
     build: ./backend
-    ports:
-      - "8000:8000"
+    # УДАЛЯЕМ ports! Бэкенд теперь спрятан за фронтендом (Nginx).
+    # Браузер пользователя будет общаться с ним через порт 80 фронтенда.
     depends_on:
       - db
     environment:
@@ -23,6 +23,6 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "80:80"
+      - "80:80" # ОСТАВЛЯЕМ только этот порт. Это наши "парадные ворота".
     depends_on:
       - backend
