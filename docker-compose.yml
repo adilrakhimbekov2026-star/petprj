@@ -22,14 +22,7 @@ services:
 
   frontend:
     build: ./frontend
-
-  nginx:
-    # Используем конкретную стабильную версию на базе Alpine
-    # Она весит ~20МБ вместо 190МБ обычной версии
-    image: nginx:1.25.3-alpine 
     ports:
       - "80:80"
     depends_on:
-    - frontend
     - backend
-    restart: always # Чтобы прокси сам вставал после перезагрузки сервера
